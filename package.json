@@ -9,7 +9,8 @@
     "build:dev": "vite build --mode development",
     "vercel-build": "npm run build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test-db": "node test-db-connection.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
