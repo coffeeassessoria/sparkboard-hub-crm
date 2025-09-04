@@ -304,6 +304,36 @@ export const mockDealsAPI = {
     const deals = getStorageData<Deal[]>(STORAGE_KEYS.deals, [])
     const filtered = deals.filter(d => d.id !== id)
     setStorageData(STORAGE_KEYS.deals, filtered)
+  },
+
+  getStatistics: async () => {
+    await delay()
+    const deals = getStorageData<Deal[]>(STORAGE_KEYS.deals, [])
+    
+    const total = deals.length
+    const totalValue = deals.reduce((sum, deal) => sum + deal.value, 0)
+    
+    const byStatus = {
+      LEAD: { count: 0, value: 0 },
+      QUALIFIED: { count: 0, value: 0 },
+      PROPOSAL: { count: 0, value: 0 },
+      NEGOTIATION: { count: 0, value: 0 },
+      CLOSED_WON: { count: 0, value: 0 },
+      CLOSED_LOST: { count: 0, value: 0 }
+    }
+    
+    deals.forEach(deal => {
+      if (byStatus[deal.status]) {
+        byStatus[deal.status].count++
+        byStatus[deal.status].value += deal.value
+      }
+    })
+    
+    return {
+      total,
+      totalValue,
+      byStatus
+    }
   }
 }
 

@@ -75,7 +75,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   const canAccessFinancial = (): boolean => {
-    return hasPermission(['ADM', 'GESTOR']);
+    return hasPermission(['ADMIN', 'MANAGER']);
   };
 
   const value: AuthContextType = {
@@ -109,11 +109,11 @@ export function usePermissions() {
   return {
     hasPermission,
     canAccessFinancial,
-    isAdmin: () => hasPermission(['ADM']),
-    isManager: () => hasPermission(['GESTOR']),
-    isOperational: () => hasPermission(['OPERACIONAL']),
-    canManageUsers: () => hasPermission(['ADM']),
-    canManageProjects: () => hasPermission(['ADM', 'GESTOR']),
-    canViewReports: () => hasPermission(['ADM', 'GESTOR'])
+    isAdmin: () => hasPermission(['ADMIN']),
+    isManager: () => hasPermission(['MANAGER']),
+    isUser: () => hasPermission(['USER']),
+    canManageUsers: () => hasPermission(['ADMIN']),
+    canManageProjects: () => hasPermission(['ADMIN', 'MANAGER']),
+    canViewReports: () => hasPermission(['ADMIN', 'MANAGER'])
   };
 }

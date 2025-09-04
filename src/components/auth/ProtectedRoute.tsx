@@ -85,7 +85,7 @@ export function ProtectedRoute({
 export function FinancialProtectedRoute({ children, fallback }: { children: React.ReactNode; fallback?: React.ReactNode }) {
   return (
     <ProtectedRoute 
-      requiredRoles={['ADM', 'GESTOR']} 
+      requiredRoles={['ADMIN', 'MANAGER']} 
       requireFinancialAccess={true}
       fallback={fallback}
     >
@@ -98,7 +98,7 @@ export function FinancialProtectedRoute({ children, fallback }: { children: Reac
 export function AdminProtectedRoute({ children, fallback }: { children: React.ReactNode; fallback?: React.ReactNode }) {
   return (
     <ProtectedRoute 
-      requiredRoles={['ADM']} 
+      requiredRoles={['ADMIN']} 
       fallback={fallback}
     >
       {children}
@@ -110,7 +110,7 @@ export function AdminProtectedRoute({ children, fallback }: { children: React.Re
 export function ManagerProtectedRoute({ children, fallback }: { children: React.ReactNode; fallback?: React.ReactNode }) {
   return (
     <ProtectedRoute 
-      requiredRoles={['ADM', 'GESTOR']} 
+      requiredRoles={['ADMIN', 'MANAGER']} 
       fallback={fallback}
     >
       {children}
