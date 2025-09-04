@@ -54,17 +54,13 @@ export function AppSidebar() {
   const { hasPermission } = usePermissions()
   
   // Filtrar itens baseado nas permissões do usuário
-  const mainItems = allMainItems // Temporariamente sem filtro
-  const systemItems = allSystemItems // Temporariamente sem filtro
-
-  // Debug logs
-  console.log('User:', user)
-  console.log('User role:', user?.role)
-  console.log('Main items:', mainItems)
-  console.log('System items:', systemItems)
-  console.log('hasPermission test:', hasPermission(['ADMIN']))
-  console.log('hasPermission test USER:', hasPermission(['USER']))
-  console.log('hasPermission test MANAGER:', hasPermission(['MANAGER']))
+  const mainItems = allMainItems.filter(item => 
+    item.roles.some(role => hasPermission([role]))
+  )
+  
+  const systemItems = allSystemItems.filter(item => 
+    item.roles.some(role => hasPermission([role]))
+  )
 
   useEffect(() => {
     const interval = setInterval(() => {
