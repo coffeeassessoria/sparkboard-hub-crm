@@ -1,73 +1,213 @@
-# Welcome to your Lovable project
+# SparkBoard Hub - Sistema de Gestão Empresarial
 
-## Project info
+![SparkBoard Hub](https://img.shields.io/badge/Status-Production%20Ready-green)
+![React](https://img.shields.io/badge/React-18.2.0-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
+![Node.js](https://img.shields.io/badge/Node.js-18+-green)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-orange)
 
-**URL**: https://lovable.dev/projects/8bb99a0c-214b-4043-8563-fd961e7c653a
+Um sistema completo de gestão empresarial desenvolvido com React, TypeScript, Node.js e MySQL. O SparkBoard Hub oferece funcionalidades abrangentes para gerenciamento de clientes, projetos, tarefas, vendas e muito mais.
 
-## How can I edit this code?
+## 🚀 Funcionalidades
 
-There are several ways of editing your application.
+### 📊 Dashboard Executivo
+- Visão geral de métricas importantes
+- Gráficos de vendas e performance
+- Indicadores de produtividade
+- Resumo de atividades recentes
 
-**Use Lovable**
+### 👥 Gestão de Clientes (CRM)
+- Cadastro completo de clientes
+- Histórico de interações
+- Segmentação de clientes
+- Acompanhamento de relacionamento
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/8bb99a0c-214b-4043-8563-fd961e7c653a) and start prompting.
+### 📋 Gestão de Projetos
+- Criação e acompanhamento de projetos
+- Definição de marcos e entregas
+- Controle de orçamento
+- Timeline de execução
 
-Changes made via Lovable will be committed automatically to this repo.
+### ✅ Gestão de Tarefas
+- Sistema Kanban integrado
+- Atribuição de responsáveis
+- Controle de prazos
+- Priorização de atividades
 
-**Use your preferred IDE**
+### 💰 Gestão de Vendas
+- Pipeline de vendas
+- Controle de propostas
+- Acompanhamento de deals
+- Relatórios de performance
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 👤 Gestão de Usuários
+- Sistema de autenticação
+- Controle de permissões
+- Perfis de usuário
+- Logs de atividade
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🛠️ Tecnologias Utilizadas
 
-Follow these steps:
+### Frontend
+- **React 18.2.0** - Biblioteca para interfaces de usuário
+- **TypeScript** - Superset tipado do JavaScript
+- **Vite** - Build tool e dev server
+- **Tailwind CSS** - Framework CSS utilitário
+- **React Router** - Roteamento para SPA
+- **Lucide React** - Ícones modernos
+- **Recharts** - Biblioteca de gráficos
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Backend
+- **Node.js** - Runtime JavaScript
+- **Express.js** - Framework web
+- **Prisma** - ORM moderno
+- **MySQL** - Banco de dados relacional
+- **JWT** - Autenticação baseada em tokens
+- **bcrypt** - Hash de senhas
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 📦 Instalação e Configuração
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Pré-requisitos
+- Node.js 18+ instalado
+- MySQL 8.0+ instalado
+- Git instalado
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+### 1. Clone o repositório
+```bash
+git clone https://github.com/coffeeassessoria/sparkboard-hub-crm.git
+cd sparkboard-hub-crm
 ```
 
-**Edit a file directly in GitHub**
+### 2. Instale as dependências
+```bash
+npm install
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 3. Configure as variáveis de ambiente
+Crie um arquivo `.env` na raiz do projeto:
 
-**Use GitHub Codespaces**
+```env
+# Database Configuration
+DATABASE_URL="mysql://username:password@localhost:3306/sparkboard_hub"
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Application Configuration
+NODE_ENV="development"
+PORT=3000
+VITE_API_URL="http://localhost:3000"
 
-## What technologies are used for this project?
+# JWT Configuration (opcional)
+JWT_SECRET="your-super-secret-jwt-key"
+```
 
-This project is built with:
+### 4. Configure o banco de dados
+```bash
+# Gerar o cliente Prisma
+npx prisma generate
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Executar as migrações
+npx prisma migrate deploy
 
-## How can I deploy this project?
+# (Opcional) Popular com dados de exemplo
+npx prisma db seed
+```
 
-Simply open [Lovable](https://lovable.dev/projects/8bb99a0c-214b-4043-8563-fd961e7c653a) and click on Share -> Publish.
+### 5. Execute o projeto
+```bash
+# Desenvolvimento
+npm run dev
 
-## Can I connect a custom domain to my Lovable project?
+# Produção
+npm run build
+npm run preview
+```
 
-Yes, you can!
+## 🌐 Deploy na Vercel
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### 1. Conecte seu repositório GitHub à Vercel
+1. Acesse [vercel.com](https://vercel.com)
+2. Faça login com sua conta GitHub
+3. Clique em "New Project"
+4. Selecione o repositório `sparkboard-hub-crm`
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### 2. Configure as variáveis de ambiente na Vercel
+No painel da Vercel, vá em Settings > Environment Variables e adicione:
+
+```
+DATABASE_URL=mysql://username:password@host:port/database
+NODE_ENV=production
+VITE_API_URL=https://your-app.vercel.app
+JWT_SECRET=your-production-jwt-secret
+```
+
+### 3. Configure o banco de dados de produção
+- Use um serviço como PlanetScale, Railway ou AWS RDS
+- Execute as migrações no banco de produção:
+```bash
+npx prisma migrate deploy
+```
+
+### 4. Deploy automático
+A Vercel fará o deploy automaticamente a cada push na branch `main`.
+
+## 📁 Estrutura do Projeto
+
+```
+sparkboard-hub-crm/
+├── src/
+│   ├── components/          # Componentes React reutilizáveis
+│   ├── pages/              # Páginas da aplicação
+│   ├── hooks/              # Custom hooks
+│   ├── lib/                # Utilitários e configurações
+│   ├── types/              # Definições de tipos TypeScript
+│   └── styles/             # Arquivos de estilo
+├── prisma/
+│   ├── schema.prisma       # Schema do banco de dados
+│   └── migrations/         # Migrações do banco
+├── public/                 # Arquivos estáticos
+├── dist/                   # Build de produção
+├── vercel.json            # Configuração da Vercel
+└── package.json           # Dependências e scripts
+```
+
+## 🔧 Scripts Disponíveis
+
+```bash
+npm run dev          # Inicia o servidor de desenvolvimento
+npm run build        # Gera build de produção
+npm run preview      # Visualiza o build de produção
+npm run lint         # Executa o linter
+npm run vercel-build # Build específico para Vercel
+```
+
+## 🗄️ Schema do Banco de Dados
+
+O projeto utiliza as seguintes tabelas principais:
+
+- **users** - Usuários do sistema
+- **clients** - Clientes da empresa
+- **projects** - Projetos em andamento
+- **tasks** - Tarefas e atividades
+- **deals** - Oportunidades de venda
+- **companies** - Empresas clientes
+
+## 🤝 Contribuição
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## 📞 Suporte
+
+Para suporte e dúvidas:
+- Email: coffeeassessoria@gmail.com
+- GitHub Issues: [Criar Issue](https://github.com/coffeeassessoria/sparkboard-hub-crm/issues)
+
+---
+
+**Desenvolvido com ❤️ pela Coffee Assessoria**
