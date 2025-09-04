@@ -30,16 +30,16 @@ import {
 } from "@/components/ui/sidebar"
 
 const allMainItems = [
-  { title: "Dashboard", url: "/", icon: Home, roles: ['ADM', 'GESTOR', 'OPERACIONAL'] },
-  { title: "Projetos", url: "/projetos", icon: Kanban, roles: ['ADM', 'GESTOR', 'OPERACIONAL'] },
-  { title: "Funil de Vendas", url: "/funil", icon: TrendingUp, roles: ['ADM', 'GESTOR', 'OPERACIONAL'] },
-  { title: "CRM", url: "/crm", icon: Users, roles: ['ADM', 'GESTOR', 'OPERACIONAL'] },
-  { title: "Financeiro", url: "/financeiro", icon: DollarSign, roles: ['ADM', 'GESTOR'] },
+  { title: "Dashboard", url: "/", icon: Home, roles: ['ADMIN', 'MANAGER', 'USER'] },
+  { title: "Projetos", url: "/projetos", icon: Kanban, roles: ['ADMIN', 'MANAGER', 'USER'] },
+  { title: "Funil de Vendas", url: "/funil", icon: TrendingUp, roles: ['ADMIN', 'MANAGER', 'USER'] },
+  { title: "CRM", url: "/crm", icon: Users, roles: ['ADMIN', 'MANAGER', 'USER'] },
+  { title: "Financeiro", url: "/financeiro", icon: DollarSign, roles: ['ADMIN', 'MANAGER'] },
 ]
 
 const allSystemItems = [
-  { title: "Configurações", url: "/configuracoes", icon: Settings, roles: ['ADM'] },
-  { title: "Notificações", url: "/notificacoes", icon: Bell, roles: ['ADM', 'GESTOR', 'OPERACIONAL'] },
+  { title: "Configurações", url: "/configuracoes", icon: Settings, roles: ['ADMIN'] },
+  { title: "Notificações", url: "/notificacoes", icon: Bell, roles: ['ADMIN', 'MANAGER', 'USER'] },
 ]
 
 export function AppSidebar() {
@@ -54,13 +54,17 @@ export function AppSidebar() {
   const { hasPermission } = usePermissions()
   
   // Filtrar itens baseado nas permissões do usuário
-  const mainItems = allMainItems.filter(item => 
-    item.roles.some(role => hasPermission([role]))
-  )
-  
-  const systemItems = allSystemItems.filter(item => 
-    item.roles.some(role => hasPermission([role as UserRole]))
-  )
+  const mainItems = allMainItems // Temporariamente sem filtro
+  const systemItems = allSystemItems // Temporariamente sem filtro
+
+  // Debug logs
+  console.log('User:', user)
+  console.log('User role:', user?.role)
+  console.log('Main items:', mainItems)
+  console.log('System items:', systemItems)
+  console.log('hasPermission test:', hasPermission(['ADMIN']))
+  console.log('hasPermission test USER:', hasPermission(['USER']))
+  console.log('hasPermission test MANAGER:', hasPermission(['MANAGER']))
 
   useEffect(() => {
     const interval = setInterval(() => {
