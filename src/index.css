@@ -1,0 +1,285 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Sunset Tropical Design System for Marketing Agency Dashboard
+All colors in HSL format for proper design consistency
+*/
+
+@layer base {
+  :root {
+    /* Base Layout Colors */
+    --background: 210 20% 98%;
+    --foreground: 210 12% 16%;
+
+    /* Card Components */
+    --card: 0 0% 100%;
+    --card-foreground: 210 12% 16%;
+
+    /* Popover & Overlays */
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 12% 16%;
+
+    /* Coffee Primary - Azul Escuro */
+    --primary: 220 45% 25%;  /* Azul escuro da Coffee */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 220 45% 35%;
+
+    /* Coffee Secondary - Laranja */
+    --secondary: 25 95% 55%; /* Laranja da Coffee */
+    --secondary-foreground: 0 0% 100%;
+
+    /* Muted Grays */
+    --muted: 220 10% 93%;
+    --muted-foreground: 220 8% 46%;
+
+    /* Coffee Accent - Laranja Claro */
+    --accent: 25 85% 65%; /* Laranja claro da Coffee */
+    --accent-foreground: 220 45% 25%;
+
+    /* Success Green */
+    --success: 162 78% 44%; /* #06D6A0 */
+    --success-foreground: 0 0% 100%;
+
+    /* Warning Yellow */
+    --warning: 44 100% 69%; /* #FFD166 */
+    --warning-foreground: 210 12% 16%;
+
+    /* Info Blue */
+    --info: 196 79% 39%; /* #118AB2 */
+    --info-foreground: 0 0% 100%;
+
+    /* Destructive */
+    --destructive: 0 78% 70%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & Inputs */
+    --border: 220 15% 87%;
+    --input: 220 15% 87%;
+    --ring: 25 95% 55%;
+
+    /* Border Radius */
+    --radius: 0.75rem;
+
+    /* Sidebar Colors */
+    --sidebar-background: 220 45% 25%; /* Azul escuro da Coffee */
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 25 95% 55%; /* Laranja da Coffee */
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 35% 30%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 220 25% 35%;
+    --sidebar-ring: 25 95% 55%;
+
+    /* Gradients */
+    --gradient-coffee: linear-gradient(135deg, hsl(220 45% 25%), hsl(25 95% 55%));
+    --gradient-coffee-light: linear-gradient(135deg, hsl(25 95% 55%), hsl(25 85% 65%));
+    --gradient-coffee-dark: linear-gradient(135deg, hsl(220 45% 25%), hsl(220 35% 20%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100% / 0.9), hsl(220 20% 98% / 0.6));
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px hsl(0 0% 0% / 0.04);
+    --shadow-md: 0 4px 20px hsl(0 0% 0% / 0.08);
+    --shadow-lg: 0 8px 32px hsl(0 0% 0% / 0.12);
+    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.3);
+
+    /* Animation Durations */
+    --duration-fast: 0.15s;
+    --duration-normal: 0.25s;
+    --duration-slow: 0.4s;
+  }
+
+  /* Custom Animations */
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+  }
+
+  @keyframes float-delayed {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(-2deg); }
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+    50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float-delayed 8s ease-in-out infinite;
+    animation-delay: 2s;
+  }
+
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+
+  .hover\:scale-102:hover {
+    transform: scale(1.02);
+  }
+
+  .dark {
+    /* Dark Mode - Coffee Theme */
+    --background: 220 50% 8%; /* Azul muito escuro */
+    --foreground: 220 20% 89%;
+
+    --card: 220 45% 12%; /* Azul escuro */
+    --card-foreground: 220 20% 89%;
+
+    --popover: 220 45% 12%;
+    --popover-foreground: 220 20% 89%;
+
+    /* Coffee primary adjusted for dark */
+    --primary: 220 45% 35%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 220 45% 45%;
+
+    --secondary: 25 95% 60%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 220 20% 18%;
+    --muted-foreground: 220 10% 60%;
+
+    --accent: 25 85% 70%;
+    --accent-foreground: 220 50% 8%;
+
+    --success: 162 78% 40%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 44 100% 65%;
+    --warning-foreground: 230 24% 9%;
+
+    --info: 196 79% 35%;
+    --info-foreground: 0 0% 100%;
+
+    --destructive: 0 78% 65%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 20% 25%;
+    --input: 220 20% 25%;
+    --ring: 25 95% 60%;
+
+    /* Dark Sidebar */
+    --sidebar-background: 220 50% 6%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 25 95% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 35% 15%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 220 25% 20%;
+    --sidebar-ring: 25 95% 60%;
+
+    /* Dark Gradients */
+    --gradient-coffee: linear-gradient(135deg, hsl(220 50% 8%), hsl(25 95% 60%));
+    --gradient-coffee-light: linear-gradient(135deg, hsl(25 95% 60%), hsl(25 85% 70%));
+    --gradient-coffee-dark: linear-gradient(135deg, hsl(220 50% 6%), hsl(220 45% 8%));
+    --gradient-card: linear-gradient(145deg, hsl(220 45% 12% / 0.9), hsl(220 50% 8% / 0.6));
+
+    /* Dark Shadows */
+    --shadow-sm: 0 2px 8px hsl(0 0% 0% / 0.2);
+    --shadow-md: 0 4px 20px hsl(0 0% 0% / 0.3);
+    --shadow-lg: 0 8px 32px hsl(0 0% 0% / 0.4);
+    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.2);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+}
+
+@layer components {
+  /* Glassmorphism Card */
+  .glass-card {
+    background: var(--gradient-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid hsl(var(--border) / 0.2);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Sunset Gradient Backgrounds */
+  .bg-gradient-coffee {
+  background: var(--gradient-coffee);
+}
+
+.bg-gradient-coffee-light {
+  background: var(--gradient-coffee-light);
+}
+
+.bg-gradient-coffee-dark {
+  background: var(--gradient-coffee-dark);
+}
+
+/* Manter compatibilidade com gradientes antigos */
+.bg-gradient-sunset {
+  background: var(--gradient-coffee);
+}
+
+.bg-gradient-ocean {
+  background: var(--gradient-coffee-light);
+}
+
+.bg-gradient-tropical {
+  background: var(--gradient-coffee-dark);
+}
+
+  /* Interactive Elements */
+  .hover-lift {
+    transition: transform var(--duration-normal) ease, box-shadow var(--duration-normal) ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .hover-scale {
+    transition: transform var(--duration-fast) ease;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+
+  /* Smooth Transitions */
+  .transition-smooth {
+    transition: all var(--duration-normal) cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

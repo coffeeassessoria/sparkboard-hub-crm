@@ -1,0 +1,156 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Enum para roles de usuário
+enum UserRole {
+  ADM
+  GESTOR
+  OPERACIONAL
+}
+
+// Enum para status de projetos
+enum ProjectStatus {
+  PLANEJAMENTO
+  EM_ANDAMENTO
+  PAUSADO
+  CONCLUIDO
+  CANCELADO
+}
+
+// Enum para status de tarefas
+enum TaskStatus {
+  PENDENTE
+  EM_ANDAMENTO
+  CONCLUIDA
+  CANCELADA
+}
+
+// Enum para prioridade de tarefas
+enum TaskPriority {
+  BAIXA
+  MEDIA
+  ALTA
+  URGENTE
+}
+
+// Enum para status de deals
+enum DealStatus {
+  LEAD
+  QUALIFICADO
+  PROPOSTA
+  NEGOCIACAO
+  FECHADO
+  PERDIDO
+}
+
+// Modelo de usuários
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  role      UserRole
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relacionamentos
+  projects Project[]
+  tasks    Task[]
+  deals    Deal[]
+
+  @@map("users")
+}
+
+// Modelo de clientes
+model Client {
+  id        String   @id @default(cuid())
+  name      String
+  email     String?
+  phone     String?
+  document  String?  @unique
+  address   Json?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relacionamentos
+  projects Project[]
+  deals    Deal[]
+
+  @@map("clients")
+}
+
+// Modelo de projetos
+model Project {
+  id          String        @id @default(cuid())
+  name        String
+  description String?       @db.Text
+  status      ProjectStatus @default(PLANEJAMENTO)
+  budget      Decimal?      @db.Decimal(10, 2)
+  startDate   DateTime?
+  endDate     DateTime?
+  clientId    String
+  managerId   String
+  active      Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relacionamentos
+  client  Client @relation(fields: [clientId], references: [id])
+  manager User   @relation(fields: [managerId], references: [id])
+  tasks   Task[]
+
+  @@map("projects")
+}
+
+// Modelo de tarefas
+model Task {
+  id          String       @id @default(cuid())
+  title       String
+  description String?      @db.Text
+  status      TaskStatus   @default(PENDENTE)
+  priority    TaskPriority @default(MEDIA)
+  dueDate     DateTime?
+  projectId   String
+  assigneeId  String?
+  active      Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // Relacionamentos
+  project  Project @relation(fields: [projectId], references: [id])
+  assignee User?   @relation(fields: [assigneeId], references: [id])
+
+  @@map("tasks")
+}
+
+// Modelo de deals/oportunidades
+model Deal {
+  id          String     @id @default(cuid())
+  title       String
+  description String?    @db.Text
+  value       Decimal?   @db.Decimal(10, 2)
+  status      DealStatus @default(LEAD)
+  probability Int?       @default(0)
+  closeDate   DateTime?
+  clientId    String
+  ownerId     String
+  active      Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  // Relacionamentos
+  client Client @relation(fields: [clientId], references: [id])
+  owner  User   @relation(fields: [ownerId], references: [id])
+
+  @@map("deals")
+}
