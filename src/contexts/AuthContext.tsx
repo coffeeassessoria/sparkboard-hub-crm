@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { authAPI } from '../api/auth';
-import { UserRole } from '@prisma/client';
+import { authAPI } from '../services/api';
+import { UserRole } from '../types';
 
 export interface User {
   id: string;

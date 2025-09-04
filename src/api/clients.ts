@@ -1,5 +1,5 @@
 import { prisma } from '../lib/prisma'
-import { Client } from '@prisma/client'
+import { Client } from '../types'
 
 export interface CreateClientRequest {
   name: string

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { projectsAPI, CreateProjectRequest, UpdateProjectRequest } from '../api/projects'
-import { Project } from '@prisma/client'
+import { projectsAPI, CreateProjectRequest, UpdateProjectRequest } from '../services/api'
+import { Project } from '../types'
 
 export function useProjects() {
   const [projects, setProjects] = useState<Project[]>([])

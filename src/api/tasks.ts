@@ -1,5 +1,5 @@
 import { prisma } from '../lib/prisma'
-import { Task, TaskStatus, TaskPriority } from '@prisma/client'
+import { Task, TaskStatus, TaskPriority } from '../types'
 
 export interface CreateTaskRequest {
   title: string

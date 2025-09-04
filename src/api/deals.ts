@@ -1,5 +1,5 @@
 import { prisma } from '../lib/prisma'
-import { Deal, DealStatus } from '@prisma/client'
+import { Deal, DealStatus } from '../types'
 
 export interface CreateDealRequest {
   title: string

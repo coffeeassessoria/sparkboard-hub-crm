@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { clientsAPI, CreateClientRequest, UpdateClientRequest } from '../api/clients'
-import { Client } from '@prisma/client'
+import { clientsAPI, CreateClientRequest, UpdateClientRequest } from '../services/api'
+import { Client } from '../types'
 
 export function useClients() {
   const [clients, setClients] = useState<Client[]>([])

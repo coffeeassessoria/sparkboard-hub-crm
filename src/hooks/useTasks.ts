@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { tasksAPI, CreateTaskRequest, UpdateTaskRequest } from '../api/tasks'
-import { Task, TaskStatus } from '@prisma/client'
+import { tasksAPI, CreateTaskRequest, UpdateTaskRequest } from '../services/api'
+import { Task, TaskStatus } from '../types'
 
 export function useTasks() {
   const [tasks, setTasks] = useState<Task[]>([])

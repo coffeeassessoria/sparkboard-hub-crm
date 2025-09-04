@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { dealsAPI, CreateDealRequest, UpdateDealRequest } from '../api/deals'
-import { Deal, DealStatus } from '@prisma/client'
+import { dealsAPI, CreateDealRequest, UpdateDealRequest } from '../services/api'
+import { Deal, DealStatus } from '../types'
 
 export function useDeals() {
   const [deals, setDeals] = useState<Deal[]>([])
