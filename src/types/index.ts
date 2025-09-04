@@ -6,6 +6,43 @@ export enum UserRole {
   MANAGER = 'MANAGER'
 }
 
+export enum Department {
+  OPERACIONAL = 'OPERACIONAL',
+  COMERCIAL = 'COMERCIAL',
+  FINANCEIRO = 'FINANCEIRO',
+  ADMINISTRATIVO = 'ADMINISTRATIVO'
+}
+
+export enum OperationalRole {
+  DESIGNER = 'DESIGNER',
+  EDITOR_VIDEO = 'EDITOR_VIDEO',
+  GESTOR_PROJETOS = 'GESTOR_PROJETOS',
+  DESENVOLVEDOR = 'DESENVOLVEDOR',
+  ANALISTA_QUALIDADE = 'ANALISTA_QUALIDADE'
+}
+
+export enum CommercialRole {
+  SDR = 'SDR',
+  BDR = 'BDR',
+  CLOSER = 'CLOSER',
+  GESTOR_COMERCIAL = 'GESTOR_COMERCIAL',
+  ACCOUNT_MANAGER = 'ACCOUNT_MANAGER'
+}
+
+export enum FinancialRole {
+  ANALISTA_FINANCEIRO = 'ANALISTA_FINANCEIRO',
+  CONTROLLER = 'CONTROLLER',
+  GESTOR_FINANCEIRO = 'GESTOR_FINANCEIRO'
+}
+
+export enum AdministrativeRole {
+  ASSISTENTE_ADMIN = 'ASSISTENTE_ADMIN',
+  COORDENADOR_RH = 'COORDENADOR_RH',
+  GESTOR_ADMIN = 'GESTOR_ADMIN'
+}
+
+export type SpecificRole = OperationalRole | CommercialRole | FinancialRole | AdministrativeRole;
+
 export enum DealStatus {
   LEAD = 'LEAD',
   QUALIFIED = 'QUALIFIED',
@@ -98,7 +135,12 @@ export interface User {
   email: string;
   name: string;
   role: UserRole;
+  department?: Department;
+  specificRole?: SpecificRole;
   avatar?: string;
+  permissions?: string[];
+  isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
+  createdBy?: string;
 }

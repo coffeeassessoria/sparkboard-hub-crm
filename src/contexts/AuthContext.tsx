@@ -1,13 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { authAPI } from '../services/api';
-import { UserRole } from '../types';
-
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: UserRole;
-}
+import { User, UserRole, Department, SpecificRole } from '../types';
 
 export interface AuthContextType {
   user: User | null;
@@ -16,6 +9,9 @@ export interface AuthContextType {
   logout: () => void;
   hasPermission: (requiredRoles: UserRole[]) => boolean;
   canAccessFinancial: () => boolean;
+  canCreateUsers: () => boolean;
+  canManageDepartment: (department: Department) => boolean;
+  hasSpecificPermission: (permission: string) => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -75,7 +71,24 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   const canAccessFinancial = (): boolean => {
-    return hasPermission(['ADMIN', 'MANAGER']);
+    // Apenas ADMIN tem acesso ao módulo financeiro
+    return hasPermission([UserRole.ADMIN]);
+  };
+
+  const canCreateUsers = (): boolean => {
+    return hasPermission([UserRole.ADMIN]);
+  };
+
+  const canManageDepartment = (department: Department): boolean => {
+    if (!user || !isAuthenticated) return false;
+    if (user.role === UserRole.ADMIN) return true;
+    return user.department === department && user.role === UserRole.MANAGER;
+  };
+
+  const hasSpecificPermission = (permission: string): boolean => {
+    if (!user || !isAuthenticated) return false;
+    if (user.role === UserRole.ADMIN) return true;
+    return user.permissions?.includes(permission) || false;
   };
 
   const value: AuthContextType = {
@@ -84,7 +97,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     login,
     logout,
     hasPermission,
-    canAccessFinancial
+    canAccessFinancial,
+    canCreateUsers,
+    canManageDepartment,
+    hasSpecificPermission
   };
 
   return (
@@ -104,16 +120,29 @@ export function useAuth(): AuthContextType {
 
 // Hook para verificar permissões específicas
 export function usePermissions() {
-  const { hasPermission, canAccessFinancial } = useAuth();
+  const { hasPermission, canAccessFinancial, canCreateUsers, canManageDepartment, hasSpecificPermission, user } = useAuth();
   
   return {
     hasPermission,
     canAccessFinancial,
-    isAdmin: () => hasPermission(['ADMIN']),
-    isManager: () => hasPermission(['MANAGER']),
-    isUser: () => hasPermission(['USER']),
-    canManageUsers: () => hasPermission(['ADMIN']),
-    canManageProjects: () => hasPermission(['ADMIN', 'MANAGER']),
-    canViewReports: () => hasPermission(['ADMIN', 'MANAGER'])
+    canCreateUsers,
+    canManageDepartment,
+    hasSpecificPermission,
+    isAdmin: () => hasPermission([UserRole.ADMIN]),
+    isManager: () => hasPermission([UserRole.MANAGER]),
+    isUser: () => hasPermission([UserRole.USER]),
+    canManageUsers: () => hasPermission([UserRole.ADMIN]),
+    canManageProjects: () => hasPermission([UserRole.ADMIN, UserRole.MANAGER]),
+    canViewReports: () => hasPermission([UserRole.ADMIN, UserRole.MANAGER]),
+    canAccessOperational: () => user?.department === Department.OPERACIONAL || hasPermission([UserRole.ADMIN]),
+    canAccessCommercial: () => user?.department === Department.COMERCIAL || hasPermission([UserRole.ADMIN]),
+    canAccessAdministrative: () => user?.department === Department.ADMINISTRATIVO || hasPermission([UserRole.ADMIN]),
+    isDesigner: () => user?.specificRole === 'DESIGNER',
+    isVideoEditor: () => user?.specificRole === 'EDITOR_VIDEO',
+    isProjectManager: () => user?.specificRole === 'GESTOR_PROJETOS',
+    isSDR: () => user?.specificRole === 'SDR',
+    isBDR: () => user?.specificRole === 'BDR',
+    isCloser: () => user?.specificRole === 'CLOSER',
+    isCommercialManager: () => user?.specificRole === 'GESTOR_COMERCIAL'
   };
 }

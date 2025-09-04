@@ -3,7 +3,8 @@
 
 import { 
   Client, Deal, Task, Project, User, 
-  DealStatus, TaskStatus, TaskPriority, ProjectStatus, UserRole 
+  DealStatus, TaskStatus, TaskPriority, ProjectStatus, UserRole,
+  Department, OperationalRole, CommercialRole
 } from '../types'
 
 // Mock data storage keys
@@ -18,19 +19,61 @@ const STORAGE_KEYS = {
 
 // Initialize mock data
 const initializeMockData = () => {
-  // Create default admin user if not exists
+  // Create default users if not exists
   const users = getStorageData<User[]>(STORAGE_KEYS.users, [])
   if (users.length === 0) {
-    const defaultUser: User = {
-      id: '1',
-      name: 'Admin User',
-      email: 'admin@crm.com',
-      role: UserRole.ADMIN,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }
-    users.push(defaultUser)
-    setStorageData(STORAGE_KEYS.users, users)
+    const defaultUsers: User[] = [
+      {
+        id: '1',
+        name: 'Admin User',
+        email: 'admin@crm.com',
+        role: UserRole.ADMIN,
+        isActive: true,
+        permissions: ['*'], // Admin tem todas as permissões
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: '2',
+        name: 'João Designer',
+        email: 'joao.designer@crm.com',
+        role: UserRole.USER,
+        department: Department.OPERACIONAL,
+        specificRole: OperationalRole.DESIGNER,
+        isActive: true,
+        permissions: ['view_projects', 'edit_designs', 'upload_assets'],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        createdBy: '1'
+      },
+      {
+        id: '3',
+        name: 'Maria SDR',
+        email: 'maria.sdr@crm.com',
+        role: UserRole.USER,
+        department: Department.COMERCIAL,
+        specificRole: CommercialRole.SDR,
+        isActive: true,
+        permissions: ['view_leads', 'create_leads', 'edit_leads'],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        createdBy: '1'
+      },
+      {
+        id: '4',
+        name: 'Carlos Gestor Comercial',
+        email: 'carlos.gestor@crm.com',
+        role: UserRole.MANAGER,
+        department: Department.COMERCIAL,
+        specificRole: CommercialRole.GESTOR_COMERCIAL,
+        isActive: true,
+        permissions: ['view_leads', 'create_leads', 'edit_leads', 'manage_team', 'view_reports'],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        createdBy: '1'
+      }
+    ]
+    setStorageData(STORAGE_KEYS.users, defaultUsers)
   }
 
   // Initialize empty arrays for other entities
@@ -490,6 +533,116 @@ export const mockProjectsAPI = {
     const projects = getStorageData<Project[]>(STORAGE_KEYS.projects, [])
     const filtered = projects.filter(p => p.id !== id)
     setStorageData(STORAGE_KEYS.projects, filtered)
+  }
+}
+
+// Users API
+export interface CreateUserRequest {
+  name: string
+  email: string
+  role: UserRole
+  department?: Department
+  specificRole?: OperationalRole | CommercialRole | FinancialRole | AdministrativeRole
+  permissions?: string[]
+  isActive?: boolean
+}
+
+export interface UpdateUserRequest extends Partial<CreateUserRequest> {
+  id: string
+}
+
+export const mockUsersAPI = {
+  getAll: async (): Promise<User[]> => {
+    await delay()
+    return getStorageData<User[]>(STORAGE_KEYS.users, [])
+  },
+
+  getById: async (id: string): Promise<User | null> => {
+    await delay()
+    const users = getStorageData<User[]>(STORAGE_KEYS.users, [])
+    return users.find(u => u.id === id) || null
+  },
+
+  create: async (data: CreateUserRequest, createdBy: string): Promise<User> => {
+    await delay()
+    const users = getStorageData<User[]>(STORAGE_KEYS.users, [])
+    
+    // Verificar se email já existe
+    const existingUser = users.find(u => u.email === data.email)
+    if (existingUser) {
+      throw new Error('Email já está em uso')
+    }
+    
+    const newUser: User = {
+      id: generateId(),
+      name: data.name,
+      email: data.email,
+      role: data.role,
+      department: data.department,
+      specificRole: data.specificRole,
+      permissions: data.permissions || [],
+      isActive: data.isActive !== undefined ? data.isActive : true,
+      createdBy,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+    
+    users.push(newUser)
+    setStorageData(STORAGE_KEYS.users, users)
+    return newUser
+  },
+
+  update: async (data: UpdateUserRequest): Promise<User> => {
+    await delay()
+    const users = getStorageData<User[]>(STORAGE_KEYS.users, [])
+    const index = users.findIndex(u => u.id === data.id)
+    
+    if (index === -1) {
+      throw new Error('Usuário não encontrado')
+    }
+    
+    // Verificar se email já existe (exceto para o próprio usuário)
+    if (data.email) {
+      const existingUser = users.find(u => u.email === data.email && u.id !== data.id)
+      if (existingUser) {
+        throw new Error('Email já está em uso')
+      }
+    }
+    
+    users[index] = {
+      ...users[index],
+      ...data,
+      updatedAt: new Date()
+    }
+    
+    setStorageData(STORAGE_KEYS.users, users)
+    return users[index]
+  },
+
+  delete: async (id: string): Promise<void> => {
+    await delay()
+    const users = getStorageData<User[]>(STORAGE_KEYS.users, [])
+    const filtered = users.filter(u => u.id !== id)
+    setStorageData(STORAGE_KEYS.users, filtered)
+  },
+
+  toggleActive: async (id: string): Promise<User> => {
+    await delay()
+    const users = getStorageData<User[]>(STORAGE_KEYS.users, [])
+    const index = users.findIndex(u => u.id === id)
+    
+    if (index === -1) {
+      throw new Error('Usuário não encontrado')
+    }
+    
+    users[index] = {
+      ...users[index],
+      isActive: !users[index].isActive,
+      updatedAt: new Date()
+    }
+    
+    setStorageData(STORAGE_KEYS.users, users)
+    return users[index]
   }
 }
 

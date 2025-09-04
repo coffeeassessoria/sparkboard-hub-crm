@@ -11,7 +11,8 @@ import {
   Search,
   Zap,
   Activity,
-  Shield
+  Shield,
+  UserPlus
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
 import { useAuth, usePermissions } from "@/contexts/AuthContext"
@@ -39,6 +40,7 @@ const allMainItems = [
 
 const allSystemItems = [
   { title: "Configurações", url: "/configuracoes", icon: Settings, roles: ['ADMIN'] },
+  { title: "Gestão de Usuários", url: "/gestao-usuarios", icon: UserPlus, roles: ['ADMIN'] },
   { title: "Notificações", url: "/notificacoes", icon: Bell, roles: ['ADMIN', 'MANAGER', 'USER'] },
 ]
 

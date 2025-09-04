@@ -16,6 +16,7 @@ import FunilVendas from "./pages/FunilVendas";
 import CRM from "./pages/CRM";
 import Financeiro from "./pages/Financeiro";
 import Configuracoes from "./pages/Configuracoes";
+import GestaoUsuarios from "./pages/GestaoUsuarios";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -55,6 +56,14 @@ function AppContent() {
                 element={
                   <AdminProtectedRoute>
                     <Configuracoes />
+                  </AdminProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/gestao-usuarios" 
+                element={
+                  <AdminProtectedRoute>
+                    <GestaoUsuarios />
                   </AdminProtectedRoute>
                 } 
               />

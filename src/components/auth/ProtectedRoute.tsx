@@ -56,7 +56,7 @@ export function ProtectedRoute({
                     <p><strong>Níveis necessários:</strong> {requiredRoles.join(', ')}</p>
                   )}
                   {requireFinancialAccess && (
-                    <p><strong>Acesso financeiro:</strong> Necessário (ADM ou GESTOR)</p>
+                    <p><strong>Acesso financeiro:</strong> Necessário (ADMIN)</p>
                   )}
                 </div>
 
@@ -85,7 +85,7 @@ export function ProtectedRoute({
 export function FinancialProtectedRoute({ children, fallback }: { children: React.ReactNode; fallback?: React.ReactNode }) {
   return (
     <ProtectedRoute 
-      requiredRoles={['ADMIN', 'MANAGER']} 
+      requiredRoles={['ADMIN']} 
       requireFinancialAccess={true}
       fallback={fallback}
     >
