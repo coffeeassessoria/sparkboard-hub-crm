@@ -9,7 +9,6 @@ import { AppHeader } from "@/components/app-header";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { LoginForm } from "@/components/auth/LoginForm";
 import { FinancialProtectedRoute, AdminProtectedRoute } from "@/components/auth/ProtectedRoute";
-import { checkAndInitializeDatabase } from "@/api";
 import { useEffect } from "react";
 import Index from "./pages/Index";
 import Projetos from "./pages/Projetos";
@@ -25,10 +24,7 @@ const queryClient = new QueryClient();
 function AppContent() {
   const { isAuthenticated } = useAuth();
 
-  useEffect(() => {
-    // Inicializar banco de dados quando a aplicação carregar
-    checkAndInitializeDatabase();
-  }, []);
+
 
   if (!isAuthenticated) {
     return <LoginForm />;
